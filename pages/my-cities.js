@@ -1,9 +1,9 @@
-import React from 'react'
+import React from 'react';
+import { withPageAuthRequired } from '@auth0/nextjs-auth0';
 
-function MyCities() {
+export default withPageAuthRequired(function MyCities() {
   return (
     <div>MyCities</div>
   )
-}
+})
 
-export default MyCities

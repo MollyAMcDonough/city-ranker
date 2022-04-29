@@ -2,10 +2,12 @@ import React, { useState } from 'react';
 import {Transition} from '@headlessui/react'; //For smooth transition between tabs
 // import {Link} from 'react-scroll'; //Alternate for a tag. In Next js we use Link for ref.
 import Link from 'next/link';
+import { useUser } from '@auth0/nextjs-auth0';
 
 function NavBar() {
     // useState is used to change state on dropdown being open for mobile navBar. only open when click sets to true
     const [isOpen,setIsOpen] = useState(false);
+    const { user, isLoading } = useUser();
     function handleSetActive(e) {
         console.log(e)
     }
@@ -66,16 +68,9 @@ function NavBar() {
                                     Find Cities
                                 </a>
                             </Link>
-                            <Link 
-                                href="/my-cities"
-                                activeClass="my-cities" 
-                                to="my-cities" 
-                                smooth={true} 
-                                offset={50} 
-                                duration={500} 
-                                className="px-3 py-2 text-sm font-medium text-black rounded-md cursor-pointer hover:bg-blue-600 hover:text-white"
-                            >
-                                <a
+                            {!isLoading && user && (
+                                <Link 
+                                    href="/my-cities"
                                     activeClass="my-cities" 
                                     to="my-cities" 
                                     smooth={true} 
@@ -83,20 +78,22 @@ function NavBar() {
                                     duration={500} 
                                     className="px-3 py-2 text-sm font-medium text-black rounded-md cursor-pointer hover:bg-blue-600 hover:text-white"
                                 >
-                                    My Cities
-                                </a>
-                            </Link>
-                            <Link 
-                                href="/login"
-                                activeClass="login" 
-                                to="login" 
-                                onSetActive={handleSetActive}
-                                smooth={true} 
-                                offset={50} 
-                                duration={500} 
-                                className="px-3 py-2 text-sm font-medium text-white bg-blue-600 rounded-md cursor-pointer hover:bg-black"
-                            >
-                                <a
+                                    <a
+                                        activeClass="my-cities" 
+                                        to="my-cities" 
+                                        smooth={true} 
+                                        offset={50} 
+                                        duration={500} 
+                                        className="px-3 py-2 text-sm font-medium text-black rounded-md cursor-pointer hover:bg-blue-600 hover:text-white"
+                                    >
+                                        My Cities
+                                    </a>
+                                </Link>
+                            )}
+                            {!isLoading && !user ? (
+                                <Link 
+                                    href="/api/auth/login"
+                                    // passHref={true}
                                     activeClass="login" 
                                     to="login" 
                                     onSetActive={handleSetActive}
@@ -105,9 +102,43 @@ function NavBar() {
                                     duration={500} 
                                     className="px-3 py-2 text-sm font-medium text-white bg-blue-600 rounded-md cursor-pointer hover:bg-black"
                                 >
-                                    Login
+                                    <a
+                                        activeClass="login" 
+                                        to="login" 
+                                        onSetActive={handleSetActive}
+                                        smooth={true} 
+                                        offset={50} 
+                                        duration={500} 
+                                        className="px-3 py-2 text-sm font-medium text-white bg-blue-600 rounded-md cursor-pointer hover:bg-black"
+                                    >
+                                        Login
+                                    </a>
+                                </Link>
+                            ) : (
+                                <Link 
+                                href="/api/auth/logout"
+                                // passHref={true}
+                                activeClass="logout" 
+                                to="logout" 
+                                onSetActive={handleSetActive}
+                                smooth={true} 
+                                offset={50} 
+                                duration={500} 
+                                className="px-3 py-2 text-sm font-medium text-white bg-blue-600 rounded-md cursor-pointer hover:bg-black"
+                            >
+                                <a
+                                    activeClass="logout" 
+                                    to="logout" 
+                                    onSetActive={handleSetActive}
+                                    smooth={true} 
+                                    offset={50} 
+                                    duration={500} 
+                                    className="px-3 py-2 text-sm font-medium text-white bg-blue-600 rounded-md cursor-pointer hover:bg-black"
+                                >
+                                    Logout
                                 </a>
                             </Link>
+                            )}
                         </div>
                     </div>
                 </div>
@@ -216,16 +247,9 @@ function NavBar() {
                                 Find Cities
                             </a>
                         </Link>
-                        <Link 
-                            href="/my-cities"
-                            activeClass="my-cities"
-                            to="my-cities"
-                            smooth={true}
-                            offset={50}
-                            duration={500}
-                            className="block px-3 py-2 text-base font-medium text-black rounded-md cursor-pointer hover:bg-blue-600 hover:text-white"
-                        >
-                            <a
+                        {!isLoading && user && (
+                            <Link 
+                                href="/my-cities"
                                 activeClass="my-cities"
                                 to="my-cities"
                                 smooth={true}
@@ -233,30 +257,61 @@ function NavBar() {
                                 duration={500}
                                 className="block px-3 py-2 text-base font-medium text-black rounded-md cursor-pointer hover:bg-blue-600 hover:text-white"
                             >
-                                My Cities
-                            </a>
-                        </Link>
-                        <Link 
-                            href="/login"
-                            activeClass="login"
-                            to="login"
-                            smooth={true}
-                            offset={50}
-                            duration={500}
-                            className="block px-3 py-2 text-base font-medium text-black rounded-md cursor-pointer hover:bg-blue-600 hover:text-white"
-                        >
-                            <a
+                                <a
+                                    activeClass="my-cities"
+                                    to="my-cities"
+                                    smooth={true}
+                                    offset={50}
+                                    duration={500}
+                                    className="block px-3 py-2 text-base font-medium text-black rounded-md cursor-pointer hover:bg-blue-600 hover:text-white"
+                                >
+                                    My Cities
+                                </a>
+                            </Link>
+                        )}
+                        {!isLoading && !user ? (
+                            <Link 
+                                href="/api/auth/login"
                                 activeClass="login"
                                 to="login"
                                 smooth={true}
                                 offset={50}
-                                duration={500} 
+                                duration={500}
                                 className="block px-3 py-2 text-base font-medium text-black rounded-md cursor-pointer hover:bg-blue-600 hover:text-white"
                             >
-                                Login
-                            </a>
-                        </Link>
-
+                                <a
+                                    activeClass="login"
+                                    to="login"
+                                    smooth={true}
+                                    offset={50}
+                                    duration={500} 
+                                    className="block px-3 py-2 text-base font-medium text-black rounded-md cursor-pointer hover:bg-blue-600 hover:text-white"
+                                >
+                                    Login
+                                </a>
+                            </Link>
+                        ) : (
+                            <Link 
+                                href="/api/auth/logout"
+                                activeClass="logout"
+                                to="logout"
+                                smooth={true}
+                                offset={50}
+                                duration={500}
+                                className="block px-3 py-2 text-base font-medium text-black rounded-md cursor-pointer hover:bg-blue-600 hover:text-white"
+                            >
+                                <a
+                                    activeClass="logout"
+                                    to="logout"
+                                    smooth={true}
+                                    offset={50}
+                                    duration={500} 
+                                    className="block px-3 py-2 text-base font-medium text-black rounded-md cursor-pointer hover:bg-blue-600 hover:text-white"
+                                >
+                                    Logout
+                                </a>
+                            </Link>
+                        )}
                     </div>
                 </div>
             )}
