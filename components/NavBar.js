@@ -11,6 +11,7 @@ function NavBar() {
     function handleSetActive(e) {
         console.log(e)
     }
+    console.log("user info:", user)
   return (
     <div>
     {/* For Main Navcontainer */}
