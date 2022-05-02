@@ -1,7 +1,7 @@
-import React, from 'react';
+import React from 'react';
 import { useState } from 'react';
 
-function CitySearchForm() {
+function CitySearchForm({ filterSubmit }) {
     const [searchData,setSearchData] = useState({})
     function handleSubmit(e) {
         e.preventDefault();
@@ -12,7 +12,8 @@ function CitySearchForm() {
         }
         console.log("Submit Event:", e)
         console.log("search data:", searchData)
-
+        setSearchData(searchData)
+        filterSubmit(searchData)
     }
     function handleChange(e) {
         setSearchData({...searchData, [e.target.id]: e.target.value})
