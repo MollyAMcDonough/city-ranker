@@ -15,7 +15,7 @@ function NavBar() {
   return (
     <div>
     {/* For Main Navcontainer */}
-    <nav className="fixed z-10 w-full shadow-sm">
+    <nav className="fixed top-0 z-50 w-full bg-white shadow-sm">
         <div className="w-full">
             <div className="flex items-center w-full h-20">
                 {/* first block section Outer part */}
