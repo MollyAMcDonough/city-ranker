@@ -3,26 +3,34 @@ import { useState } from 'react'
 import { useUser } from '@auth0/nextjs-auth0'
 import NavBar from '../components/NavBar'
 import CitySearchForm from '../components/CitySearchForm'
+import FilteredCities from '../components/FilteredCities'
+
 
 export default function FindCities({}) {
   const { user, isLoading } = useUser();
   const [cities, setCities] = useState([]);
+  const [cityKeys, setCityKeys] = useState([]);
   const axios = require("axios");
 
   function filterSubmit(cityFilters) {
-
+    let cityKeyArr = Object.keys(cityFilters).map((filter)=> {
+      if (filter==="population_min" || filter==="population_max") {
+        return "population"
+      }
+      return filter
+    });
+    setCityKeys([...new Set(cityKeyArr)])
+    
     const options = {
       method: 'GET',
       url: 'http://127.0.0.1:4000/cities/search',
       params: cityFilters,
       headers: {
-        // 'X-RapidAPI-Host': 'cost-of-living-and-prices.p.rapidapi.com',
-        // 'X-RapidAPI-Key': '665587ffb4msh5194ff99f4e1c2dp1fd5d0jsna8fae9f2a7ea'
       }
     };
 
     axios.request(options).then(function (response) {
-      console.log(response.data);
+      setCities(response.data);
     }).catch(function (error) {
       console.error(error);
     });
@@ -30,10 +38,17 @@ export default function FindCities({}) {
   }
 
   return (
-    <div className="overscroll-contain">
-      <NavBar />
-      <div className="relative overscroll-none">
-        <CitySearchForm filterSubmit={filterSubmit} />
+    <div className="flex flex-col overscroll-contain">
+      <div>
+        <NavBar />
+      </div>
+      <div className="flex flex-row" >
+        <div className="relative flex-1 overscroll-none">
+          <CitySearchForm filterSubmit={filterSubmit} />
+        </div>
+        <div className="relative flex-2 overscroll-none ">
+          <FilteredCities cities={cities} cityKeys={cityKeys} />
+        </div>
       </div>
     </div>
   )

@@ -28,7 +28,8 @@ function CitySearchForm({ filterSubmit }) {
         setSearchData({...searchData, [e.target.name]: radio_val})
     }
   return (
-      <div className="relative left-0 z-20 overflow-y-scroll max-h-max md:w-1/3 top-20 overscroll-none">
+    //   <div className="relative left-0 z-20 overflow-y-scroll max-h-max md:w-1/3 top-20 overscroll-none">
+    <div className="relative z-10 flex flex-wrap items-center justify-between px-3 py-3 bg-white shadow-xl md:left-0 md:block md:fixed md:top-20 md:bottom-0 md:overflow-y-auto md:flex-row md:flex-nowrap md:overflow-hidden md:w-1/3">
         <form>
             <h4 className="px-2 py-2 text-blue-600 text-md">
                 Input values for the city metrics that matter to you. Fields left empty won't be considered.
@@ -90,7 +91,7 @@ function CitySearchForm({ filterSubmit }) {
                 htmlFor="monthly_after_tax_salary" 
                 className="px-2 py-2 text-sm"
             >
-                Average monthly salary after tax: (enter minimum desired value)
+                Minimum average monthly salary after tax:
             </label>
             <input 
                 type="number" 
@@ -100,7 +101,7 @@ function CitySearchForm({ filterSubmit }) {
                 className="mx-2 mb-2 border border-blue-600 rounded-md " 
             /><br/>
             <label className="px-2 py-2 text-md">
-                Average price (USD/m^2) to buy an apartment: (enter maximum desired value
+                Maximum average price (USD/m^2) to buy an apartment:
             </label><br/>
             <label 
                 htmlFor="apt_price_per_meter2_outside_city_center" 
@@ -129,7 +130,7 @@ function CitySearchForm({ filterSubmit }) {
                 className="mx-2 mb-2 border border-blue-600 rounded-md " 
             /><br/>
             <label className="px-2 py-2 text-md">
-                Average monthly rent for a one bedroom apartment: (enter maximum desired value)
+                Maximum average monthly rent for a one bedroom apartment:
             </label><br/>
             <label 
                 htmlFor="monthly_rent_one_bdrm_outside_city_center" 
@@ -161,7 +162,7 @@ function CitySearchForm({ filterSubmit }) {
                 htmlFor="monthly_utilities" 
                 className="px-2 py-2 text-sm"
             >
-                Monthly Utilities: (enter desired maximum value)
+                Maximum Monthly Utilities:
             </label>
             <input 
                 type="number" 
@@ -174,7 +175,7 @@ function CitySearchForm({ filterSubmit }) {
                 htmlFor="monthly_internet" 
                 className="px-2 py-2 text-sm"
             >
-                Monthly Internet: (enter desired maximum value)
+                Maximum Monthly Internet:
             </label>
             <input 
                 type="number" 
