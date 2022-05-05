@@ -55,12 +55,14 @@ export default withPageAuthRequired(function MyCities() {
         const newCities = myCities.filter((c) => c.id!==city.id)
         console.log("was city removed?",newCities)
         setMyCities(newCities)
-    } else {
+    } else if (verb==="UPDATE"){
         const newCities = myCities.map((c) => {
             if (c.id===city.id) return city;
             return c;
         })
         setMyCities(newCities)
+    } else {
+        setMyCities(city)
     }
   }
 
