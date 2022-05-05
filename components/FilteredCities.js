@@ -1,13 +1,39 @@
 import React from 'react'
+import { useEffect, useState } from 'react'
+import { useUser } from '@auth0/nextjs-auth0'
 import City from '../components/City'
 
-function FilteredCities({ categories, cities, cityKeys }) {
+function FilteredCities({ cities, cityKeys }) {
+    const { user, isLoading } = useUser();
+    const [categories, setCategories] = useState([]);
+    const axios = require("axios");
+
+    useEffect(() => {
+        if (!isLoading && user) {
+          const options = {
+            method: 'GET',
+            url: 'http://127.0.0.1:4000/categories',
+            params: {sub: user.sub},
+            headers: {
+            }
+          };
+          axios.request(options).then(function (response) {
+            setCategories(response.data);
+            console.log("categories axios get:",response.data)
+          }).catch(function (error) {
+            console.error(error);
+          });
+        } else {
+          setCategories([]);
+        }
+    
+      },[user, isLoading])
     
     const headers = cityKeys.map((k) => <th key={k}
         className="px-6 py-3 text-xs font-semibold text-left uppercase align-middle border border-l-0 border-r-0 border-solid whitespace-nowrap bg-blueGray-50 text-blueGray-500 border-blueGray-100"
         >{k}</th>)
 
-    const rows = cities.map((city) => <City key={city.id} categories={categories} city={city} cityKeys={cityKeys} />)
+    const rows = cities.map((city) => <City key={city.id} categories={categories} setCategories={setCategories} city={city} cityKeys={cityKeys} />)
 
     return (
         // <div className="relative z-20 overflow-y-scroll left-20 max-h-max md:w-2/3 top-20 overscroll-none">FilteredCities

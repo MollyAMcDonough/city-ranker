@@ -8,9 +8,11 @@ import FilteredCities from '../components/FilteredCities'
 
 export default function FindCities({}) {
   const { user, isLoading } = useUser();
+  const [categories, setCategories] = useState([]);
   const [cities, setCities] = useState([]);
   const [cityKeys, setCityKeys] = useState([]);
   const axios = require("axios");
+
 
   function filterSubmit(cityFilters) {
     let cityKeyArr = Object.keys(cityFilters).map((filter)=> {

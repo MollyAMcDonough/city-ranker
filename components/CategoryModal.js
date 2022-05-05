@@ -1,11 +1,32 @@
 import React from "react";
+import { useUser } from '@auth0/nextjs-auth0'
 
-export default function CategoryModal() {
+export default function CategoryModal({categories, setCategories}) {
+  const { user, isLoading } = useUser();
   const [showModal, setShowModal] = React.useState(false);
   const [category, setCategory] = React.useState([]);
+  const axios = require("axios");
 
   function handleChange(e) {
     setCategory({...category, [e.target.name]: e.target.value})
+  }
+
+  function handleSubmit(e) {
+      e.preventDefault();
+      const params = {...category, sub: user.sub}
+      const options = {
+        method: 'POST',
+        url: 'http://127.0.0.1:4000/categories',
+        params: params,
+        headers: {
+        }
+      };
+      axios.request(options).then(function (response) {
+        setCategories([...categories,response.data])
+        setShowModal(false)
+      }).catch(function (error) {
+        console.error(error);
+      });
   }
   return (
     <>
@@ -21,7 +42,7 @@ export default function CategoryModal() {
           <div
             className="fixed inset-0 z-50 flex items-center justify-center overflow-x-hidden overflow-y-auto outline-none focus:outline-none"
           >
-            <div className="relative w-auto max-w-sm mx-auto my-6">
+            <div className="relative w-auto max-w-3xl mx-auto my-6">
               {/*content*/}
               <div className="relative flex flex-col w-full bg-white border-0 rounded-lg shadow-lg outline-none focus:outline-none">
                 {/*header*/}
@@ -41,10 +62,10 @@ export default function CategoryModal() {
                 {/*body*/}
                 <div className="relative flex-auto p-6">
                 <form>
-                      <label htmlFor="name">Name:</label>
+                      <label htmlFor="name">Name:</label><br/>
                       <input id="name" type="text" name="name" onChange={handleChange} />
-                      <label htmlFor="description">Description:</label>
-                      <textarea name="description" onChange={handleChange}/>
+                      <label htmlFor="description">Description:</label><br/>
+                      <textarea id="description" name="description"  rows={3} cols={3} onChange={handleChange} />
                   </form>
                 </div>
                 {/*footer*/}
@@ -59,7 +80,7 @@ export default function CategoryModal() {
                   <button
                     className="px-6 py-3 mb-1 mr-1 text-sm font-bold text-white uppercase bg-blue-600 rounded-md cursor-pointer hover:bg-black"
                     type="button"
-                    onClick={() => setShowModal(false)}
+                    onClick={handleSubmit}
                   >
                     Save Changes
                   </button>
