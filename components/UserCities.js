@@ -1,68 +1,43 @@
 import React from 'react'
-import { useEffect, useState } from 'react'
-import { useUser } from '@auth0/nextjs-auth0'
 import UserCity from '../components/UserCity'
 
 function UserCities({ categories,changeCities,myCities }) {
-    // const { user, isLoading } = useUser();
-    // const [categories, setCategories] = useState([]);
-    // const [myCities, setMyCities] = useState([]);
-    // const axios = require("axios");
-
-    // useEffect(() => {
-    //     if (!isLoading && user) {
-    //         const options = {
-    //             method: 'GET',
-    //             url: 'http://127.0.0.1:4000/categories',
-    //             params: {sub: user.sub},
-    //             headers: {
-    //             }
-    //           };
-    //           axios.request(options).then(function (response) {
-    //             setCategories(response.data);
-    //             console.log("categories axios get:",response.data)
-    //           }).catch(function (error) {
-    //             console.error(error);
-    //           });
-            
-    //         const options2 = {
-    //             method: 'GET',
-    //             url: 'http://127.0.0.1:4000/user_cities',
-    //             params: {sub: user.sub},
-    //             headers: {
-    //             }
-    //         };
-    //         axios.request(options2).then(function (response) {
-    //             setMyCities(response.data);
-    //             console.log("my cities axios get:",response.data)
-    //         }).catch(function (error) {
-    //             console.error(error);
-    //         });
-    //     } else {
-    //         setCategories([]);
-    //         setMyCities([]);
-    //     }
     
-    //   },[user, isLoading])
-
-    //   function changeCities({ city, verb }) {
-    //       if (verb==="DELETE") {
-    //           const newCities = myCities.filter((c) => !c.id===city.id)
-    //           setMyCities(newCities)
-    //       } else {
-    //           const newCities = myCities.map((c) => {
-    //               if (c.id===city.id) return city;
-    //               return c;
-    //           })
-    //           setMyCities(newCities)
-    //       }
-    //   }
+    function sortTable(column,dir) {
+        let sortedCities = [...myCities]
+        if (column==="category") {
+            sortedCities.sort((a,b) => {
+                return (a.category.name === b.category.name ? 0 : (a.category.name < b.category.name ? -1 :1));
+            })
+        } else if (column==="note") {
+            sortedCities.sort((a,b) => {
+                return (a.note === b.note ? 0 : (a.note < b.note ? -1 :1));
+            })
+        } else {
+            sortedCities.sort((a,b) => {
+                return (a.city[column] === b.city[column] ? 0 : (a.city[column] < b.city[column] ? -1 :1));
+            })
+        }
+        if (dir==="DESC") {
+            sortedCities.reverse()
+        }
+        changeCities(sortedCities,"SORT")
+    }
     
-    const headerArr = ["city", "region", "on_water", "population", "avg_salary",  "avg_rent" ,"notes"];
+    const headerArr = ["city", "region", "on_water", "population"];
     
-    const headers = headerArr.map((k) => <th key={k}
-        className="px-6 py-3 text-xs font-semibold text-left uppercase align-middle border border-l-0 border-r-0 border-solid whitespace-nowrap bg-blueGray-50 text-blueGray-500 border-blueGray-100"
-        >{k}</th>)
+    const headers = headerArr.map((k) => {
+        return (
+        <th 
+            key={k}
+            className="px-6 py-3 text-xs font-semibold text-left uppercase align-middle border border-l-0 border-r-0 border-solid whitespace-nowrap bg-blueGray-50 text-blueGray-500 border-blueGray-100"
+        >
+            {k}
+            <button className="px-1" onClick={()=>sortTable({k},"ASC")}>🔼</button>
+            <button onClick={()=>sortTable({k},"DESC")}>🔽</button>
+        </th>
+        )
+    })
 
     const rows = myCities.map((city) => <UserCity key={city.id} categories={categories} city={city} changeCities={changeCities}/>)
 
@@ -79,8 +54,31 @@ function UserCities({ categories,changeCities,myCities }) {
                                     className="px-6 py-3 text-xs font-semibold text-left uppercase align-middle border border-l-0 border-r-0 border-solid whitespace-nowrap bg-blueGray-50 text-blueGray-500 border-blueGray-100"
                                 >
                                     Category
+                                    <button className="px-1" onClick={()=>sortTable("category","ASC")}>🔼</button>
+                                    <button onClick={()=>sortTable("category","DESC")}>🔽</button>
                                 </th>
                                 {headers}
+                                <th 
+                                    className="px-6 py-3 text-xs font-semibold text-left uppercase align-middle border border-l-0 border-r-0 border-solid whitespace-nowrap bg-blueGray-50 text-blueGray-500 border-blueGray-100"
+                                >
+                                    avg_salary
+                                    <button className="px-1" onClick={()=>sortTable("monthly_after_tax_salary","ASC")}>🔼</button>
+                                    <button onClick={()=>sortTable("monthly_after_tax_salary","DESC")}>🔽</button>
+                                </th>
+                                <th 
+                                    className="px-6 py-3 text-xs font-semibold text-left uppercase align-middle border border-l-0 border-r-0 border-solid whitespace-nowrap bg-blueGray-50 text-blueGray-500 border-blueGray-100"
+                                >
+                                    avg_rent
+                                    <button className="px-1" onClick={()=>sortTable("monthly_rent_one_bdrm_inside_city_center","ASC")}>🔼</button>
+                                    <button onClick={()=>sortTable("monthly_rent_one_bdrm_inside_city_center","DESC")}>🔽</button>
+                                </th>
+                                <th 
+                                    className="px-6 py-3 text-xs font-semibold text-left uppercase align-middle border border-l-0 border-r-0 border-solid whitespace-nowrap bg-blueGray-50 text-blueGray-500 border-blueGray-100"
+                                >
+                                    notes
+                                    <button className="px-1" onClick={()=>sortTable("note","ASC")}>🔼</button>
+                                    <button onClick={()=>sortTable("note","DESC")}>🔽</button>
+                                </th>
                             </tr>
                         </thead>
                         <tbody>
