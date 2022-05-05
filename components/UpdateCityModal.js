@@ -2,13 +2,13 @@ import React from "react";
 import { useUser } from '@auth0/nextjs-auth0';
 import CategoryModal from "./CategoryModal"
 
-export default function SaveCityModal({ city, categories, setCategories }) {
+export default function UpdateCityModal({ city, categories, changeCities }) {
     const { user, isLoading } = useUser();
     const [showModal, setShowModal] = React.useState(false);
     const [cityData, setCityData] = React.useState({
-        category_id: categories[0].id.toString(),
+        category_id: city.category.id,
         sub: user.sub,
-        city_id: city.id
+        note: city.note
     });
     const axios = require("axios");
 
@@ -18,18 +18,34 @@ export default function SaveCityModal({ city, categories, setCategories }) {
         setCityData({...cityData, [e.target.name]: e.target.value});
     }
 
+    function handleDelete() {
+        const options = {
+            method: 'DELETE',
+            url: `http://127.0.0.1:4000/user_cities/${city.id}`,
+            params: {sub: user.sub},
+            headers: {
+            }
+          };
+          axios.request(options).then(function () {
+            console.log("gonna call remove cities???")
+            changeCities(city,"DELETE");
+            setShowModal(false)
+          }).catch(function (error) {
+            console.error(error);
+          });
+    }
+
     function handleSubmit(e) {
         e.preventDefault();
-        console.log(cityData)
         const options = {
-            method: 'POST',
-            url: 'http://127.0.0.1:4000/user_cities',
+            method: 'PATCH',
+            url: `http://127.0.0.1:4000/user_cities/${city.id}`,
             params: cityData,
             headers: {
             }
           };
           axios.request(options).then(function (response) {
-            console.log(response.data)
+            changeCities(response.data,"UPDATE")
             setShowModal(false)
           }).catch(function (error) {
             console.error(error);
@@ -43,7 +59,7 @@ export default function SaveCityModal({ city, categories, setCategories }) {
             type="button"
             onClick={() => setShowModal(true)}
         >
-            Save
+            Edit
         </button>
         {showModal ? (
             <>
@@ -56,7 +72,7 @@ export default function SaveCityModal({ city, categories, setCategories }) {
                     {/*header*/}
                     <div className="flex items-start justify-between p-5 border-b border-solid rounded-t border-blueGray-200">
                     <h3 className="text-3xl font-semibold">
-                        {`Save ${city.city} to Your Cities`}
+                        {`Update ${city.city.city} in Your Cities`}
                     </h3>
                     <button
                         className="float-right p-1 ml-auto text-3xl font-semibold leading-none text-black bg-transparent border-0 outline-none opacity-5 focus:outline-none"
@@ -76,7 +92,7 @@ export default function SaveCityModal({ city, categories, setCategories }) {
                             {categoryDropdowns}
                         </select>
                         <label htmlFor="note">Notes:</label>
-                        <textarea name="note" onChange={handleChange}/>
+                        <textarea name="note" onChange={handleChange}>{city.note}</textarea>
                     </form>
                     </div>
                     {/*footer*/}
@@ -88,7 +104,13 @@ export default function SaveCityModal({ city, categories, setCategories }) {
                     >
                         Close
                     </button>
-                    <CategoryModal categories={categories} setCategories={setCategories}/>
+                    <button
+                        className="px-6 py-3 mb-1 mr-1 text-sm font-bold text-white uppercase bg-red-500 rounded-md cursor-pointer hover:bg-black"
+                        type="submit"
+                        onClick={handleDelete}
+                    >
+                        Delete
+                    </button>
                     <button
                         className="px-6 py-3 mb-1 mr-1 text-sm font-bold text-white uppercase bg-blue-600 rounded-md cursor-pointer hover:bg-black"
                         type="submit"
