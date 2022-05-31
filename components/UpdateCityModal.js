@@ -55,7 +55,7 @@ export default function UpdateCityModal({ city, categories, changeCities }) {
     return (
         <>
         <button
-            className="px-3 py-2 text-xs font-medium text-white bg-blue-600 rounded-md cursor-pointer hover:bg-black"
+            className="px-3 py-2 text-xs font-medium text-white rounded-md cursor-pointer bg-sky-600 hover:bg-black"
             type="button"
             onClick={() => setShowModal(true)}
         >
@@ -85,14 +85,19 @@ export default function UpdateCityModal({ city, categories, changeCities }) {
                     </div>
                     {/*body*/}
                     <div className="relative flex-auto p-6">
-                    <form>
-                        <label htmlFor="category">Category:</label>
-                        <select id="category" name="category_id" onChange={handleChange}>
-                            {/* can maybe make a button that opens a smaller modal. once save the new category that should be the selected value in this savecity modal */}
-                            {categoryDropdowns}
-                        </select>
-                        <label htmlFor="note">Notes:</label>
-                        <textarea name="note" onChange={handleChange}>{city.note}</textarea>
+                    <form className="flex flex-wrap px-auto">
+                        <div className="px-2">
+                            <label className="items-start text-base text-left" htmlFor="category">Category:</label><br/>
+                            <select id="category" name="category_id" value={cityData.category_id} className="mt-2 text-sm border rounded-md border-sky-600" onChange={handleChange}>
+                                {/* can maybe make a button that opens a smaller modal. once save the new category that should be the selected value in this savecity modal */}
+                                {categoryDropdowns}
+                            </select>
+                        </div>
+                        <div className="px-2 md:w-2/3 pr-auto">
+                            <label className="items-start text-base text-left" 
+                                htmlFor="note">Notes:</label><br/>
+                            <textarea name="note" value={cityData.note} className="pl-1 mt-2 text-sm border rounded-md md:w-full border-sky-600" onChange={handleChange} />
+                        </div>
                     </form>
                     </div>
                     {/*footer*/}
@@ -106,13 +111,13 @@ export default function UpdateCityModal({ city, categories, changeCities }) {
                     </button>
                     <button
                         className="px-6 py-3 mb-1 mr-1 text-sm font-bold text-white uppercase bg-red-500 rounded-md cursor-pointer hover:bg-black"
-                        type="submit"
+                        type="button"
                         onClick={handleDelete}
                     >
                         Delete
                     </button>
                     <button
-                        className="px-6 py-3 mb-1 mr-1 text-sm font-bold text-white uppercase bg-blue-600 rounded-md cursor-pointer hover:bg-black"
+                        className="px-6 py-3 mb-1 mr-1 text-sm font-bold text-white uppercase rounded-md cursor-pointer bg-sky-600 hover:bg-black"
                         type="submit"
                         onClick={handleSubmit}
                     >

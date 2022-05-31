@@ -47,13 +47,8 @@ export default withPageAuthRequired(function MyCities() {
   }, [user, isLoading])
   
   function changeCities(city, verb) {
-    console.log("change cities was called")
-    console.log("verb=",verb)
-    console.log("verb==",verb==="DELETE")
     if (verb==="DELETE") {
-        console.log("inside delete ifff")
         const newCities = myCities.filter((c) => c.id!==city.id)
-        console.log("was city removed?",newCities)
         setMyCities(newCities)
     } else if (verb==="UPDATE"){
         const newCities = myCities.map((c) => {

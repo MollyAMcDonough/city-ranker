@@ -1,7 +1,7 @@
 import React from "react";
 import { useUser } from '@auth0/nextjs-auth0'
 
-export default function CategoryModal({categories, setCategories}) {
+export default function CategoryModal({categories, setCategories, cityData, setCityData}) {
   const { user, isLoading } = useUser();
   const [showModal, setShowModal] = React.useState(false);
   const [category, setCategory] = React.useState([]);
@@ -23,6 +23,7 @@ export default function CategoryModal({categories, setCategories}) {
       };
       axios.request(options).then(function (response) {
         setCategories([...categories,response.data])
+        setCityData({...cityData, category_id: response.data.id})
         setShowModal(false)
       }).catch(function (error) {
         console.error(error);
@@ -31,7 +32,7 @@ export default function CategoryModal({categories, setCategories}) {
   return (
     <>
       <button
-        className="px-6 py-3 mb-1 mr-1 text-sm font-bold text-white uppercase bg-blue-600 rounded-md cursor-pointer hover:bg-black"
+        className="px-6 py-3 mb-1 mr-1 text-sm font-bold text-white uppercase rounded-md cursor-pointer bg-sky-600 hover:bg-black"
         type="button"
         onClick={() => setShowModal(true)}
       >
@@ -63,9 +64,9 @@ export default function CategoryModal({categories, setCategories}) {
                 <div className="relative flex-auto p-6">
                 <form>
                       <label htmlFor="name">Name:</label><br/>
-                      <input id="name" type="text" name="name" onChange={handleChange} />
+                      <input className="mt-2 mb-4 border rounded-md border-sky-600 md:w-full" id="name" type="text" name="name" onChange={handleChange} /><br/>
                       <label htmlFor="description">Description:</label><br/>
-                      <textarea id="description" name="description"  rows={3} cols={3} onChange={handleChange} />
+                      <textarea className="mt-2 border rounded-md border-sky-600 md:w-full" id="description" name="description" onChange={handleChange} />
                   </form>
                 </div>
                 {/*footer*/}
@@ -78,7 +79,7 @@ export default function CategoryModal({categories, setCategories}) {
                     Close
                   </button>
                   <button
-                    className="px-6 py-3 mb-1 mr-1 text-sm font-bold text-white uppercase bg-blue-600 rounded-md cursor-pointer hover:bg-black"
+                    className="px-6 py-3 mb-1 mr-1 text-sm font-bold text-white uppercase rounded-md cursor-pointer bg-sky-600 hover:bg-black"
                     type="button"
                     onClick={handleSubmit}
                   >
