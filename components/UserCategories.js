@@ -5,29 +5,19 @@ function UserCategories({ changeCategories, myCategories }) {
     
     function sortTable(column,dir) {
         let sortedCategories = [...myCategories]
-        // if (column==="category") {
-        //     sortedCategories.sort((a,b) => {
-        //         return (a.category.name === b.category.name ? 0 : (a.category.name < b.category.name ? -1 :1));
-        //     })
-        // } else if (column==="note") {
-        //     sortedCategories.sort((a,b) => {
-        //         return (a.note === b.note ? 0 : (a.note < b.note ? -1 :1));
-        //     })
-        // } else {
-        //     sortedCategories.sort((a,b) => {
-        //         return (a.city[column] === b.city[column] ? 0 : (a.Category[column] < b.city[column] ? -1 :1));
-        //     })
-        // }
-        // if (dir==="DESC") {
-        //     sortedCategories.reverse()
-        // }
+        sortedCategories.sort((a,b) => {
+            return (a[column] === b[column] ? 0 : (a[column] < b[column] ? -1 :1))
+        })
+        if (dir==="DESC") {
+            sortedCategories.reverse()
+        }
         changeCategories(sortedCategories,"SORT")
     }
 
-    const rows = myCategories.map((cat) => <UserCategory key={cat.id} category={category} changeCategories={changeCategories}/>)
+    const rows = myCategories.map((cat) => <UserCategory key={cat.id} category={cat} changeCategories={changeCategories}/>)
 
   return (
-    <div className="bg-[url('../img/charleston.jpeg')] relative z-10 flex flex-wrap items-center justify-between px-3 py-3 shadow-xl md:block md:fixed md:top-20 md:bottom-0 md:overflow-y-auto md:flex-row md:flex-nowrap md:overflow-hidden md:w-full">
+    <div className="bg-[url('../img/miltiadis-fragkidis-5ULk8EgE8tg-unsplash.jpg')] bg-no-repeat bg-cover relative z-10 flex flex-wrap items-center justify-between px-3 py-3 shadow-xl md:block md:fixed md:top-20 md:bottom-0 md:overflow-y-auto md:flex-row md:flex-nowrap md:overflow-hidden md:w-full">
         <div
                 className="relative flex flex-col w-full min-w-0 mb-6 break-words bg-white rounded shadow-lg opacity-90"
             >

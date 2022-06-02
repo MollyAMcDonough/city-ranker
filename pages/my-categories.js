@@ -52,7 +52,7 @@ export default withPageAuthRequired(function MyCategories() {
         setMyCategories(newCategories)
     } else if (verb==="UPDATE"){
         const newCategories = myCategories.map((c) => {
-            if (c.id===city.id) return city;
+            if (c.id===category.id) return category;
             return c;
         })
         setMyCategories(newCategories)

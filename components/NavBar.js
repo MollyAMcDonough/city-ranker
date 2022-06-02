@@ -7,11 +7,11 @@ import { useUser } from '@auth0/nextjs-auth0';
 function NavBar() {
     // useState is used to change state on dropdown being open for mobile navBar. only open when click sets to true
     const [isOpen,setIsOpen] = useState(false);
+    const [myStuffOpen, setMyStuffOpen] = useState(false);
     const { user, isLoading } = useUser();
     function handleSetActive(e) {
         console.log(e)
     }
-    console.log("user info:", user)
   return (
     <div>
     {/* For Main Navcontainer */}
@@ -21,8 +21,8 @@ function NavBar() {
                 {/* first block section Outer part */}
                 <div className="flex items-center justify-between w-full mx-20 items">
                     <div className="flex items-center justify-center flex-shrink-0">
-                        <h1 className="text-xl font-bold cursor-pointer">
-                            City<span className="text-blue-500">Ranker</span>
+                        <h1 className="text-xl font-bold">
+                            City<span className="text-sky-600">Ranker</span>
                         </h1>
                     </div>
                     {/* for small screnn we don't show tabs that's why written hidden and on medium device i.e. m we want them as block */}
@@ -36,7 +36,6 @@ function NavBar() {
                                 smooth={true} 
                                 offset={50} 
                                 duration={500} 
-                                className="px-3 py-2 font-semibold text-blue-600 cursor-pointer text-md hover:font-black"
                             >
                                 <a
                                     activeClass="home" 
@@ -44,7 +43,7 @@ function NavBar() {
                                     smooth={true} 
                                     offset={50} 
                                     duration={500} 
-                                    className="px-3 py-2 font-semibold text-blue-600 cursor-pointer text-md hover:font-black"
+                                    className={myStuffOpen ? "px-3 py-2 font-semibold text-sky-600 cursor-pointer text-md hover:font-black relative md:top-10" : "px-3 py-2 font-semibold text-sky-600 cursor-pointer text-md hover:font-black"}
                                 >
                                     Home
                                 </a>
@@ -56,7 +55,6 @@ function NavBar() {
                                 smooth={true} 
                                 offset={50} 
                                 duration={500} 
-                                className="px-3 py-2 text-sm font-medium text-black rounded-md cursor-pointer hover:bg-blue-600 hover:text-white"
                             >
                                 <a
                                     activeClass="find-cities" 
@@ -64,32 +62,61 @@ function NavBar() {
                                     smooth={true} 
                                     offset={50} 
                                     duration={500} 
-                                    className="px-3 py-2 text-sm font-medium text-black rounded-md cursor-pointer hover:bg-blue-600 hover:text-white"
+                                    className={myStuffOpen ? "px-3 py-2 text-sm font-medium text-black rounded-md cursor-pointer hover:bg-sky-600 hover:text-white  relative md:top-10" : "px-3 py-2 text-sm font-medium text-black rounded-md cursor-pointer hover:bg-sky-600 hover:text-white"
+                                    }
                                 >
                                     Find Cities
                                 </a>
                             </Link>
                             {!isLoading && user && (
-                                <Link 
-                                    href="/my-cities"
-                                    activeClass="my-cities" 
-                                    to="my-cities" 
-                                    smooth={true} 
-                                    offset={50} 
-                                    duration={500} 
-                                    className="px-3 py-2 text-sm font-medium text-black rounded-md cursor-pointer hover:bg-blue-600 hover:text-white"
-                                >
-                                    <a
-                                        activeClass="my-cities" 
-                                        to="my-cities" 
-                                        smooth={true} 
-                                        offset={50} 
-                                        duration={500} 
-                                        className="px-3 py-2 text-sm font-medium text-black rounded-md cursor-pointer hover:bg-blue-600 hover:text-white"
-                                    >
-                                        My Cities
-                                    </a>
-                                </Link>
+                                <div
+                                    className={myStuffOpen ? "block px-3 py-2 text-sm font-medium text-black rounded-md cursor-pointer hover:bg-sky-600 hover:text-white relative md:top-10" : "block px-3 py-2 text-sm font-medium text-black rounded-md cursor-pointer hover:bg-sky-600 hover:text-white"}
+                                    onMouseOver={()=>setMyStuffOpen(true)}
+                                    onMouseOut={()=>setMyStuffOpen(false)}
+                                > My Stuff
+                                    {myStuffOpen &&
+                                        <div> 
+                                            <Link 
+                                                href="/my-categories"
+                                                activeClass="my-categories" 
+                                                to="my-categories" 
+                                                smooth={true} 
+                                                offset={50} 
+                                                duration={500} 
+                                            >
+                                                <a
+                                                    activeClass="my-categories" 
+                                                    to="my-categories" 
+                                                    smooth={true} 
+                                                    offset={50} 
+                                                    duration={500} 
+                                                    className="block px-3 py-2 text-base font-medium text-black rounded-md cursor-pointer hover:bg-sky-600 hover:text-white"
+                                                >
+                                                    My Categories
+                                                </a>
+                                            </Link>
+                                            <Link 
+                                                href="/my-cities"
+                                                activeClass="my-cities" 
+                                                to="my-cities" 
+                                                smooth={true} 
+                                                offset={50} 
+                                                duration={500} 
+                                            >
+                                                <a
+                                                    activeClass="my-cities" 
+                                                    to="my-cities" 
+                                                    smooth={true} 
+                                                    offset={50} 
+                                                    duration={500} 
+                                                    className="block px-3 py-2 text-base font-medium text-black rounded-md cursor-pointer hover:bg-sky-600 hover:text-white"
+                                                >
+                                                    My Cities
+                                                </a>
+                                            </Link>
+                                        </div>
+                                    }
+                                </div>
                             )}
                             {!isLoading && !user ? (
                                 <Link 
@@ -101,7 +128,6 @@ function NavBar() {
                                     smooth={true} 
                                     offset={50} 
                                     duration={500} 
-                                    className="px-3 py-2 text-sm font-medium text-white bg-blue-600 rounded-md cursor-pointer hover:bg-black"
                                 >
                                     <a
                                         activeClass="login" 
@@ -110,35 +136,33 @@ function NavBar() {
                                         smooth={true} 
                                         offset={50} 
                                         duration={500} 
-                                        className="px-3 py-2 text-sm font-medium text-white bg-blue-600 rounded-md cursor-pointer hover:bg-black"
+                                        className={myStuffOpen ? "px-3 py-2 text-sm font-medium text-white bg-sky-600 rounded-md cursor-pointer hover:bg-black relative md:top-10" : "px-3 py-2 text-sm font-medium text-white bg-sky-600 rounded-md cursor-pointer hover:bg-black"}
                                     >
                                         Login
                                     </a>
                                 </Link>
                             ) : (
                                 <Link 
-                                href="/api/auth/logout"
-                                // passHref={true}
-                                activeClass="logout" 
-                                to="logout" 
-                                onSetActive={handleSetActive}
-                                smooth={true} 
-                                offset={50} 
-                                duration={500} 
-                                className="px-3 py-2 text-sm font-medium text-white bg-blue-600 rounded-md cursor-pointer hover:bg-black"
-                            >
-                                <a
+                                    href="/api/auth/logout"
                                     activeClass="logout" 
                                     to="logout" 
                                     onSetActive={handleSetActive}
                                     smooth={true} 
                                     offset={50} 
                                     duration={500} 
-                                    className="px-3 py-2 text-sm font-medium text-white bg-blue-600 rounded-md cursor-pointer hover:bg-black"
                                 >
-                                    Logout
-                                </a>
-                            </Link>
+                                    <a
+                                        activeClass="logout" 
+                                        to="logout" 
+                                        onSetActive={handleSetActive}
+                                        smooth={true} 
+                                        offset={50} 
+                                        duration={500} 
+                                        className={myStuffOpen ? "px-3 py-2 text-sm font-medium text-white bg-sky-600 rounded-md cursor-pointer hover:bg-black relative md:top-10" : "px-3 py-2 text-sm font-medium text-white bg-sky-600 rounded-md cursor-pointer hover:bg-black"}
+                                    >
+                                        Logout
+                                    </a>
+                                </Link>
                             )}
                         </div>
                     </div>
@@ -148,7 +172,7 @@ function NavBar() {
                     {/* when we click what will happen on mobile */}
                     <button onClick={() => setIsOpen(!isOpen)} 
                         type="button" 
-                        className="inline-flex items-center justify-center p-2 text-white bg-blue-600 rounded-md outline-none hover:bg-blue-600 focus: focus:ring-offset-blue-800 focus:ring-white"
+                        className="inline-flex items-center justify-center p-2 text-white rounded-md outline-none bg-sky-600 hover:bg-sky-600 focus: focus:ring-offset-sky-800 focus:ring-white"
                         aria-controls="mobile-menu"
                         aria-expanded="false"
                     >
@@ -215,7 +239,6 @@ function NavBar() {
                             smooth={true}
                             offset={50}
                             duration={500}
-                            className="block px-3 py-2 text-base font-medium text-black rounded-md cursor-pointer hover:bg-blue-600 hover:text-white"
                         >
                             <a
                                 activeClass="home"
@@ -223,7 +246,7 @@ function NavBar() {
                                 smooth={true}
                                 offset={50}
                                 duration={500}
-                                className="block px-3 py-2 text-base font-medium text-black rounded-md cursor-pointer hover:bg-blue-600 hover:text-white"
+                                className="block px-3 py-2 text-base font-medium text-black rounded-md cursor-pointer hover:bg-sky-600 hover:text-white"
                             >
                                 Home
                             </a>
@@ -235,7 +258,6 @@ function NavBar() {
                             smooth={true}
                             offset={50}
                             duration={500}
-                            className="block px-3 py-2 text-base font-medium text-black rounded-md cursor-pointer hover:bg-blue-600 hover:text-white"
                         >
                             <a
                                 activeClass="find-cities"
@@ -243,12 +265,13 @@ function NavBar() {
                                 smooth={true}
                                 offset={50}
                                 duration={500}
-                                className="block px-3 py-2 text-base font-medium text-black rounded-md cursor-pointer hover:bg-blue-600 hover:text-white"
+                                className="block px-3 py-2 text-base font-medium text-black rounded-md cursor-pointer hover:bg-sky-600 hover:text-white"
                             >
                                 Find Cities
                             </a>
                         </Link>
                         {!isLoading && user && (
+                            <>
                             <Link 
                                 href="/my-cities"
                                 activeClass="my-cities"
@@ -256,7 +279,6 @@ function NavBar() {
                                 smooth={true}
                                 offset={50}
                                 duration={500}
-                                className="block px-3 py-2 text-base font-medium text-black rounded-md cursor-pointer hover:bg-blue-600 hover:text-white"
                             >
                                 <a
                                     activeClass="my-cities"
@@ -264,11 +286,31 @@ function NavBar() {
                                     smooth={true}
                                     offset={50}
                                     duration={500}
-                                    className="block px-3 py-2 text-base font-medium text-black rounded-md cursor-pointer hover:bg-blue-600 hover:text-white"
+                                    className="block px-3 py-2 text-base font-medium text-black rounded-md cursor-pointer hover:bg-sky-600 hover:text-white"
                                 >
                                     My Cities
                                 </a>
                             </Link>
+                            <Link 
+                                href="/my-categories"
+                                activeClass="my-categories"
+                                to="my-categories"
+                                smooth={true}
+                                offset={50}
+                                duration={500}
+                            >
+                                <a
+                                    activeClass="my-categories"
+                                    to="my-categories"
+                                    smooth={true}
+                                    offset={50}
+                                    duration={500}
+                                    className="block px-3 py-2 text-base font-medium text-black rounded-md cursor-pointer hover:bg-sky-600 hover:text-white"
+                                >
+                                    My Categories
+                                </a>
+                            </Link>
+                            </>
                         )}
                         {!isLoading && !user ? (
                             <Link 
@@ -278,7 +320,6 @@ function NavBar() {
                                 smooth={true}
                                 offset={50}
                                 duration={500}
-                                className="block px-3 py-2 text-base font-medium text-black rounded-md cursor-pointer hover:bg-blue-600 hover:text-white"
                             >
                                 <a
                                     activeClass="login"
@@ -286,7 +327,7 @@ function NavBar() {
                                     smooth={true}
                                     offset={50}
                                     duration={500} 
-                                    className="block px-3 py-2 text-base font-medium text-black rounded-md cursor-pointer hover:bg-blue-600 hover:text-white"
+                                    className="block px-3 py-2 text-base font-medium text-black rounded-md cursor-pointer hover:bg-sky-600 hover:text-white"
                                 >
                                     Login
                                 </a>
@@ -299,7 +340,6 @@ function NavBar() {
                                 smooth={true}
                                 offset={50}
                                 duration={500}
-                                className="block px-3 py-2 text-base font-medium text-black rounded-md cursor-pointer hover:bg-blue-600 hover:text-white"
                             >
                                 <a
                                     activeClass="logout"
@@ -307,7 +347,7 @@ function NavBar() {
                                     smooth={true}
                                     offset={50}
                                     duration={500} 
-                                    className="block px-3 py-2 text-base font-medium text-black rounded-md cursor-pointer hover:bg-blue-600 hover:text-white"
+                                    className="block px-3 py-2 text-base font-medium text-black rounded-md cursor-pointer hover:bg-sky-600 hover:text-white"
                                 >
                                     Logout
                                 </a>
