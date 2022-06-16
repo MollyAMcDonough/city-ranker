@@ -120,8 +120,8 @@ function NavBar() {
                             )}
                             {!isLoading && !user ? (
                                 <Link 
-                                    // href="/api/auth/login"
-                                    href="https://city-ranker.vercel.app/api/auth/login"
+                                    href="/api/auth/login"
+                                    // href="https://city-ranker.vercel.app/api/auth/login"
                                     // passHref={true}
                                     activeClass="login" 
                                     to="login" 
@@ -144,8 +144,8 @@ function NavBar() {
                                 </Link>
                             ) : (
                                 <Link 
-                                    // href="/api/auth/logout"
-                                    href="https://city-ranker.vercel.app/api/auth/logout"
+                                    href="/api/auth/logout"
+                                    // href="https://city-ranker.vercel.app/api/auth/logout"
                                     activeClass="logout" 
                                     to="logout" 
                                     onSetActive={handleSetActive}
@@ -316,8 +316,8 @@ function NavBar() {
                         )}
                         {!isLoading && !user ? (
                             <Link 
-                                // href="/api/auth/login"
-                                href="https://city-ranker.vercel.app/api/auth/login"
+                                href="/api/auth/login"
+                                // href="https://city-ranker.vercel.app/api/auth/login"
                                 activeClass="login"
                                 to="login"
                                 smooth={true}
@@ -337,8 +337,8 @@ function NavBar() {
                             </Link>
                         ) : (
                             <Link 
-                                // href="/api/auth/logout"
-                                href="https://city-ranker.vercel.app/api/auth/logout"
+                                href="/api/auth/logout"
+                                // href="https://city-ranker.vercel.app/api/auth/logout"
                                 activeClass="logout"
                                 to="logout"
                                 smooth={true}
