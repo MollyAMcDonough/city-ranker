@@ -14,7 +14,8 @@ export default withPageAuthRequired(function MyCities() {
     if (!isLoading && user) {
         const options = {
             method: 'GET',
-            url: 'http://127.0.0.1:4000/categories',
+            // url: 'http://127.0.0.1:4000/categories',
+            url: 'http://city-ranker-api.herokuapp.com/categories',
             params: {sub: user.sub},
             headers: {
             }
@@ -28,7 +29,8 @@ export default withPageAuthRequired(function MyCities() {
         
         const options2 = {
             method: 'GET',
-            url: 'http://127.0.0.1:4000/user_cities',
+            // url: 'http://127.0.0.1:4000/user_cities',
+            url: 'http://city-ranker-api.herokuapp.com/user_cities',
             params: {sub: user.sub},
             headers: {
             }

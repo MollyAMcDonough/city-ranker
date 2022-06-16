@@ -30,7 +30,8 @@ export default function FindCities({}) {
     
     const options = {
       method: 'GET',
-      url: 'http://127.0.0.1:4000/cities/search',
+      // url: 'http://127.0.0.1:4000/cities/search',
+      url: 'https://city-ranker-api.herokuapp.com/cities/search',
       params: cityFilters,
       headers: {
       }
