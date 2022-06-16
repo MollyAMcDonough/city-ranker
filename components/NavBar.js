@@ -114,6 +114,25 @@ function NavBar() {
                                                     My Cities
                                                 </a>
                                             </Link>
+                                            <Link 
+                                                href="/my-details"
+                                                activeClass="my-details" 
+                                                to="my-details" 
+                                                smooth={true} 
+                                                offset={50} 
+                                                duration={500} 
+                                            >
+                                                <a
+                                                    activeClass="my-details" 
+                                                    to="my-details" 
+                                                    smooth={true} 
+                                                    offset={50} 
+                                                    duration={500} 
+                                                    className="block px-3 py-2 text-base font-medium text-black rounded-md cursor-pointer hover:bg-sky-600 hover:text-white"
+                                                >
+                                                    My Details
+                                                </a>
+                                            </Link>
                                         </div>
                                     }
                                 </div>
@@ -310,6 +329,25 @@ function NavBar() {
                                     className="block px-3 py-2 text-base font-medium text-black rounded-md cursor-pointer hover:bg-sky-600 hover:text-white"
                                 >
                                     My Categories
+                                </a>
+                            </Link>
+                            <Link 
+                                href="/my-details"
+                                activeClass="my-details"
+                                to="my-details"
+                                smooth={true}
+                                offset={50}
+                                duration={500}
+                            >
+                                <a
+                                    activeClass="my-details"
+                                    to="my-details"
+                                    smooth={true}
+                                    offset={50}
+                                    duration={500}
+                                    className="block px-3 py-2 text-base font-medium text-black rounded-md cursor-pointer hover:bg-sky-600 hover:text-white"
+                                >
+                                    My Details
                                 </a>
                             </Link>
                             </>
