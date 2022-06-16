@@ -15,7 +15,7 @@ export default withPageAuthRequired(function MyCategories() {
         const options = {
             method: 'GET',
             // url: 'http://127.0.0.1:4000/categories',
-            url: 'http://city-ranker-api.herokuapp.com/categories'
+            url: 'http://city-ranker-api.herokuapp.com/categories',
             params: {sub: user.sub},
             headers: {
             }
