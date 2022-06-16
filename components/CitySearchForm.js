@@ -97,7 +97,7 @@ function CitySearchForm({ filterSubmit }) {
     <div className="relative z-10 flex flex-wrap items-center justify-between px-4 bg-white shadow-xl md:left-0 md:block md:fixed md:top-20 md:bottom-0 md:overflow-y-auto md:flex-row md:flex-nowrap md:overflow-hidden md:w-1/3">
         <form>
             <h4 className="py-3 text-sky-600 text-md">
-                Input values for the city metrics that matter to you. Fields left empty won't be considered.
+                Input values for the city metrics that matter to you. Fields left empty won&apos;t be considered.
             </h4>
             {/* <label htmlFor="city" className="py-2 text-sm" >
                 City Name: 
