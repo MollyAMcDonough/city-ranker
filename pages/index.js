@@ -156,7 +156,7 @@ export default function Home() {
                         </div>
                         <div>
                           <h4 className="text-blueGray-500">
-                            Create user curated categories of cities such as "Close to family" or "Affordable"
+                            Create user curated categories of cities such as &quot;Close to family&quot; or &quot;Affordable&quot;
                           </h4>
                         </div>
                       </div>
