@@ -5,7 +5,6 @@ import NavBar from '../components/NavBar';
 import PopulateDB from '../components/PopulateDB';
 import styles from '../styles/Home.module.css';
 
-
 export default function Home() {
   return (
     <div className={styles.container}>
@@ -272,8 +271,8 @@ export default function Home() {
                 </div>
                 <div className="px-6">
                   <img
-                    alt="image of web developer for this website"
-                    src="https://scontent-atl3-1.xx.fbcdn.net/v/t1.6435-9/182773670_10158259168526453_7629140523842622126_n.jpg?_nc_cat=101&ccb=1-6&_nc_sid=730e14&_nc_ohc=JeY6CvX7jr8AX_dtYvg&_nc_ht=scontent-atl3-1.xx&oh=00_AT-CFBmU5WSqCEVes8mrqvA_K7yteBQZmz3HHIRRNtwZpQ&oe=62A1A8A9"
+                    alt="Image of developer for this website"
+                    src='/molly.jpg'
                     className="mx-auto rounded-full shadow-lg max-w-120-px"
                   />
                   <div className="pt-6 text-center">
